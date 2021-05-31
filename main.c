@@ -212,7 +212,7 @@ int main(int argc, char *argv[])
 	printf("Odd's in Matrix1 = %d\n\n",nech);
 //} Пункт 4
 
-//Закрытие файлов+очистка
+//Закрытие файлов + очистка
 	for(i = 0; i < n; i++) {
 		free(matrix1[i]);
 		free(matrix2[i]);
