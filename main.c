@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
 		summ[i] = (int*)malloc(n*sizeof(int));
 	}
 
-	//Чтение массивов с файла + //Вывод
+	//Чтение массивов с файла + Вывод
 	printf("Matrix1\n");
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
