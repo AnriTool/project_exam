@@ -1,34 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-//Ïóíêò 2.func {
-int **sum(int **matrix1, int **matrix2, int n) //ñîçäàåì óêàçàòåëü íà ôóíêöèþ, àðãóìåíòàìè êîòîðîãî áóäóò óêàçàòåëè íà íàøè ìàòðèöû äâå ** ïîòîìó ÷òî äâóìåðíûå ìàòðèöû
+//Пункт 2.func {
+int **sum(int **matrix1, int **matrix2, int n) //создаем указатель на функцию, аргументами которого будут указатели на наши матрицы две ** потому что двумерные матрицы
 {
-	int i,j; //Ïåðåìåííûå äëÿ öèêëà 
+	int i,j; //Переменные для цикла
 	int **result;
 
-	//Âûäåëåíèå ïàìÿòè äëÿ ðåçóëüòàòà
+	//Выделение памяти для результата
 	result = (int**)malloc(n*sizeof(int*));
 	for(i = 0; i < n; i++)
 		result[i] = (int*)malloc(n*sizeof(int));
-	//Âû÷åñëåíèå(+)
+	//Вычесление(+)
 	for (i = 0; i < n; i++)
 		for (j = 0; j < n; j++)
 			result[i][j] = matrix1[i][j] + matrix2[i][j];
-	//Âîçâðàùåíèå result èç ôóíêöèè
+	//Возвращение result из функции
 	return result;
 }
 
 int **mul(int **matrix1, int **matrix2, int n)
 {
-	int i,j,k,s; //Ïåðåìåííûå äëÿ öèêëà è ñóììû
+	int i,j,k,s; //Переменные для цикла и суммы
 	int **result;
 
-	//Âûäåëåíèå ïàìÿòè äëÿ ðåçóëüòàòà
+	//Выделение памяти для результата
 	result = (int**)malloc(n*sizeof(int*));
 	for(i = 0; i < n; i++)
 		result[i] = (int*)malloc(n*sizeof(int));
-	//Âû÷åñëåíèå(*)
+	//Вычесление(*)
 	for (i = 0; i<n; i++) {
 		for (j = 0; j<n; j++) {
 			s = 0;
@@ -38,36 +38,36 @@ int **mul(int **matrix1, int **matrix2, int n)
 			result[i][j] += s;
 		}
 	}
-	//Âîçâðàùåíèå result èç ôóíêöèè
+	//Возвращение result из функции
 	return result;
 }
-//} Ïóíêò 2.func
+//} Пункт 2.func
 
 
 int main(int argc, char *argv[])
 {
 	FILE *in, *out;
-	int n,i,j,r;	//n - ðàçìåðíîñòü ìàòðèö, i,j - ïåðåìåííûå öèêëà, r - ïåðåìåííàÿ ðàíäîìà
+	int n,i,j,r;	//n - размерность матриц, i,j - переменные цикла, r - переменная рандома
 	int **matrix1, **matrix2, **summ, **mult, **refresh;
 	int min = 999, nech = 0;
 
-//Ïóíêò 5.start {
-	//èíèöèàëüçàöèÿ è íà÷àëî îò÷åòà òàéìåðà
+//Пункт 5.start {
+	//инициальзация и начало отчета таймера
 	time_t start,end;
 	volatile long unsigned t;
 	start = time(NULL);
-//} Ïóíêò 5.start
+//} Пункт 5.start
 
 
-//Ïóíêò 1 {
+//Пункт 1 {
 	in = fopen("input.txt","w");
 
-	//×èòàåì ðàçìåðíîòñü ìàòðèöû
+	//Читаем размернотсь матрицы
 	printf("Enter demensions \n");
 	scanf("%d",&n);
 	printf("\n");
 
-	//Âûäåëÿåì ïàìÿòü äëÿ ìàòðèö
+	//Выделяем память для матриц
 	matrix1 = (int**)malloc(n*sizeof(int*));
 	matrix2 = (int**)malloc(n*sizeof(int*));
 	for (i = 0; i < n; i++) {
@@ -75,20 +75,20 @@ int main(int argc, char *argv[])
 		matrix2[i] = (int*)malloc(n*sizeof(int));
 	}
 
-	//Çàïîëíÿåì ìàññèâ ñëó÷àéíûìè ÷èñëàìè
-	srand(time(NULL)); //çàäà¸ì seed, îñíîâàíûé íà ñèñòåìíîì âðåìåíè
-	fprintf(in,"%d\n",n); //çàïèñûâàåì ðàçìåðíîñòü ìàññèâîâ
+	//Заполняем массив случайными числами
+	srand(time(NULL)); //задаём seed, основаный на системном времени
+	fprintf(in,"%d\n",n); //записываем размерность массивов
 	for (i = 0; i<n; i++) {
 		for(j = 0; j < n; j++) {
-			r = rand()%101; //çàïèñûâàåì ñëó÷àéíîå ÷èñëî â r (äèàïàçîí îò 0 äî 100)
+			r = rand()%101; //записываем случайное число в r (диапазон от 0 до 100)
 			fprintf(in,"%d ",r);
 		}
 		fprintf(in,"\n");
 	}
 
-	fprintf(in,"\n");//Äåëàåì îòñòóï äëÿ êðàñèâîé çàïèñè äâóõ ìàññèâîâ â ôàéë
+	fprintf(in,"\n");//Делаем отступ для красивой записи двух массивов в файл
 
-	//Ïîâòîðÿåì ÷òîá ïîëó÷èòü âòîðóþ ìàòðèöó
+	//Повторяем чтоб получить вторую матрицу
 	for (i = 0; i<n; i++) {
 		for(j = 0; j < n; j++) {
 			r = rand()%101;
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
 		}
 		fprintf(in,"\n");
 	}
-	//î÷èñòêà + çàêðûòèå ôàéëà
+	//очистка + закрытие файла
 	fclose(in);
 	for(i = 0; i < n; i++) {
 		free(matrix1[i]);
@@ -105,16 +105,16 @@ int main(int argc, char *argv[])
 	free(matrix1);
 	free(matrix2);
 	n = 0;
-//}	Ïóíêò 1
+//}	Пункт 1
 
 
-//Ïóíêò 2 {
+//Пункт 2 {
 	in = fopen("input.txt","r");
 	out = fopen("output.txt","w");
 
 	fscanf(in,"%d",&n);
 
-	//Âûäåëåíèå ïàìÿòè
+	//Выделение памяти
 	matrix1 = (int**)malloc(n*sizeof(int*));
 	matrix2 = (int**)malloc(n*sizeof(int*));
 	mult = (int**)malloc(n*sizeof(int*));
@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
 		summ[i] = (int*)malloc(n*sizeof(int));
 	}
 
-	//×òåíèå ìàññèâîâ ñ ôàéëà + Âûâîä
+	//Чтение массивов с файла + Вывод
 	printf("Matrix1\n");
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
@@ -171,10 +171,10 @@ int main(int argc, char *argv[])
 		fprintf(out,"\n");
 	}
 
-//} Ïóíêò 2
+//} Пункт 2
 
 
-//Ïóíêò 3{
+//Пункт 3{
 	refresh = (int**)malloc(n*sizeof(int*));
 	for (i = 0; i < n; i++) {
 		refresh[i] = (int*)malloc(n*sizeof(int));
@@ -182,7 +182,7 @@ int main(int argc, char *argv[])
 
 	for(i = 0; i < n; i++) {
 		for(j = 0; j < n ; j++)
-			if (j%2 != 0) {                  //Åñëè èíäåêñ ó ñòîëáöà - íå÷åòíûé(ò.ê. íà÷èíàåì îò÷åò ñ 0ãî ýëëåìåíòà), òî ìåíÿåì ìåñòàìè ïðåäûäóùèé è íûíåøíèé
+			if (j%2 != 0) {                  //Если индекс у столбца - нечетный(т.к. начинаем отчет с 0го эллемента), то меняем местами предыдущий и нынешний
 				refresh[i][j-1] = summ[i][j];
 				refresh[i][j] = summ[i][j-1];
 			} else
@@ -197,9 +197,9 @@ int main(int argc, char *argv[])
 		printf("\n");
 	}
 	printf("\n");
-//} Ïóíêò 3
+//} Пункт 3
 
-// Ïóíêò 4{
+// Пункт 4{
 
 	for (i = 0; i < n; i++)
 		for (j = 0; j < n; j++) {
@@ -210,9 +210,9 @@ int main(int argc, char *argv[])
 		}
 	printf("Min in Matrix1 = %d\n\n",min);
 	printf("Odd's in Matrix1 = %d\n\n",nech);
-//} Ïóíêò 4
+//} Пункт 4
 
-//Çàêðûòèå ôàéëîâ + î÷èñòêà
+//Закрытие файлов + очистка
 	for(i = 0; i < n; i++) {
 		free(matrix1[i]);
 		free(matrix2[i]);
@@ -227,10 +227,10 @@ int main(int argc, char *argv[])
 	free(refresh);
 	fclose(in);
 	fclose(out);
-//Ïóíêò 5.end {
+//Пункт 5.end {
 	end = time(NULL);
 	printf("Time = %f\n", difftime(end, start));
-//}	Ïóíêò 5.end
+//}	Пункт 5.end
 	getch();
 	return 0;
 }
